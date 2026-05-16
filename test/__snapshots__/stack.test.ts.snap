@@ -1,0 +1,212 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`AlternateContactConfigureStack Should match snapshot 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "AlternateContactConfigurerConfigureAlternateContacts257DB4A8": {
+      "DependsOn": [
+        "AlternateContactConfigurerConfigureAlternateContactsServiceRoleDefaultPolicy0BD6A0D3",
+        "AlternateContactConfigurerConfigureAlternateContactsServiceRoleE9CDEBB5",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "b49fb2c52da13250748ee332680e4405ff44c8c02e0030f140380ea025ed2a37.zip",
+        },
+        "Description": "src/funcs/contacts-configurer.lambda.ts",
+        "Environment": {
+          "Variables": {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "SSM_PATH_PREFIX": "/org/alternate-contacts",
+          },
+        },
+        "Handler": "index.handler",
+        "LoggingConfig": {
+          "ApplicationLogLevel": "INFO",
+          "LogFormat": "JSON",
+          "SystemLogLevel": "INFO",
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "AlternateContactConfigurerConfigureAlternateContactsServiceRoleE9CDEBB5",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs24.x",
+        "Timeout": 120,
+        "TracingConfig": {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "AlternateContactConfigurerConfigureAlternateContactsServiceRoleDefaultPolicy0BD6A0D3": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            {
+              "Action": "account:PutAlternateContact",
+              "Effect": "Allow",
+              "Resource": "arn:aws:organizations::*:account/o-*/*",
+            },
+            {
+              "Action": "ssm:GetParameters",
+              "Effect": "Allow",
+              "Resource": "arn:aws:ssm:*:*:parameter/org/alternate-contacts/*",
+            },
+            {
+              "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "AlternateContactConfigurerConfigureAlternateContactsServiceRoleDefaultPolicy0BD6A0D3",
+        "Roles": [
+          {
+            "Ref": "AlternateContactConfigurerConfigureAlternateContactsServiceRoleE9CDEBB5",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "AlternateContactConfigurerConfigureAlternateContactsServiceRoleE9CDEBB5": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "AlternateContactConfigurerCreateManagedAccountSucceededRuleAllowEventRuleAlternateContactConfigureStackAlternateContactConfigurerConfigureAlternateContactsDB1A697302CEC5AB": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "AlternateContactConfigurerConfigureAlternateContacts257DB4A8",
+            "Arn",
+          ],
+        },
+        "Principal": "events.amazonaws.com",
+        "SourceArn": {
+          "Fn::GetAtt": [
+            "AlternateContactConfigurerCreateManagedAccountSucceededRuleD5003CC9",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "AlternateContactConfigurerCreateManagedAccountSucceededRuleD5003CC9": {
+      "Properties": {
+        "Description": "Configure alternate contacts when Control Tower successfully creates a managed account",
+        "EventPattern": {
+          "detail": {
+            "eventName": [
+              "CreateManagedAccount",
+            ],
+            "serviceEventDetails": {
+              "createManagedAccountStatus": {
+                "state": [
+                  "SUCCEEDED",
+                ],
+              },
+            },
+          },
+          "detail-type": [
+            "AWS Service Event via CloudTrail",
+          ],
+          "source": [
+            "aws.controltower",
+          ],
+        },
+        "State": "ENABLED",
+        "Targets": [
+          {
+            "Arn": {
+              "Fn::GetAtt": [
+                "AlternateContactConfigurerConfigureAlternateContacts257DB4A8",
+                "Arn",
+              ],
+            },
+            "Id": "Target0",
+          },
+        ],
+      },
+      "Type": "AWS::Events::Rule",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
