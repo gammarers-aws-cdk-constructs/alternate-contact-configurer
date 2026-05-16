@@ -7,6 +7,11 @@ const project = new awscdk.AwsCdkConstructLibrary({
   typescriptVersion: '5.9.x',
   jsiiVersion: '5.9.x',
   name: 'alternate-contact-configurer',
+  devDeps: [
+    '@aws-sdk/client-account',
+    '@aws-sdk/client-ssm',
+    '@types/aws-lambda@^8.10.145',
+  ],
   packageManager: javascript.NodePackageManager.YARN_CLASSIC,
   projenrcTs: true,
   repositoryUrl: 'https://github.com/gammarers-aws-cdk-constructs/alternate-contact-configurer.git',
