@@ -16,7 +16,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   projenrcTs: true,
   repositoryUrl: 'https://github.com/gammarers-aws-cdk-constructs/alternate-contact-configurer.git',
   releaseToNpm: true,
-  npmTrustedPublishing: false,
+  npmTrustedPublishing: true,
   npmAccess: javascript.NpmAccess.PUBLIC,
   mergify: true,
   minNodeVersion: '20.0.0',
