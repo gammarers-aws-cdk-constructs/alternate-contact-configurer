@@ -1,5 +1,6 @@
 {
   "name": "alternate-contact-configurer",
+  "description": "AWS CDK construct library that automatically sets alternate contacts (Security, Billing, Operations) on new member accounts when AWS Control Tower finishes creating them via Account Factory.",
   "repository": {
     "type": "git",
     "url": "https://github.com/gammarers-aws-cdk-constructs/alternate-contact-configurer.git"

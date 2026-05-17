@@ -15,6 +15,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   packageManager: javascript.NodePackageManager.YARN_CLASSIC,
   projenrcTs: true,
   repositoryUrl: 'https://github.com/gammarers-aws-cdk-constructs/alternate-contact-configurer.git',
+  description: 'AWS CDK construct library that automatically sets alternate contacts (Security, Billing, Operations) on new member accounts when AWS Control Tower finishes creating them via Account Factory.',
   releaseToNpm: true,
   npmTrustedPublishing: true,
   npmAccess: javascript.NpmAccess.PUBLIC,
