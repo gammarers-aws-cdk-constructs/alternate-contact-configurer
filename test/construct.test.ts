@@ -7,7 +7,9 @@ describe('alternate contact configurer', () => {
   const app = new App();
   const stack = new Stack(app, 'TestingStack');
 
-  new AlternateContactConfigurer(stack, 'AlternateContactConfigurer');
+  new AlternateContactConfigurer(stack, 'AlternateContactConfigurer', {
+    controlTowerHomeRegion: 'us-east-1',
+  });
 
   const template = Template.fromStack(stack);
   it('Should match snapshot', () => {
